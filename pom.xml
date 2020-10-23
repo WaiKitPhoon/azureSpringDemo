@@ -39,7 +39,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.microsoft.azure</groupId>
-			<artifactId>azure-storage-spring-boot-starter</artifactId>
+			<artifactId>azure-storage</artifactId>
+			<version>8.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
