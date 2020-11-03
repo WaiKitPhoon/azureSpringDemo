@@ -14,29 +14,44 @@ class DatasourceConfig {
     @Value("\${connectionString}")
     private var connectionString = ""
 
+    @Value("\${dockerConnection}")
+    private var dockerConnection = ""
+
     @Value("\${dscredentials}")
     private var dataSourceCredentials = ""
 
     @Value("\${driverClassName}")
     private var driverClassName = ""
 
+    @Value("\${spring.profiles.active}")
+    private val activeProfile = ""
+
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     fun getDataSource(): DataSource? {
         val dataSourceBuilder = DataSourceBuilder.create()
-        dataSourceBuilder.url(connectionString)
+        dataSourceBuilder.url(retrieveJDBCfromProfile())
         dataSourceBuilder.username(dataSourceCredentials)
         dataSourceBuilder.password(dataSourceCredentials)
         dataSourceBuilder.driverClassName(driverClassName)
-        getSecrets(connectionString, dataSourceCredentials, driverClassName)
+        getSecrets(retrieveJDBCfromProfile(), dataSourceCredentials, driverClassName)
         return dataSourceBuilder.build()
     }
 
-    fun getSecrets(connection: String, credential: String, driverClassName : String) {
+    fun getSecrets(connection: String, credential: String, driverClassName: String) {
         println(connection)
         println(credential)
         println(driverClassName)
     }
+
+    fun retrieveJDBCfromProfile() : String {
+        return when (activeProfile) {
+            "dev" -> connectionString
+            "docker"-> dockerConnection
+            else -> connectionString
+        }
+    }
+
 
 }

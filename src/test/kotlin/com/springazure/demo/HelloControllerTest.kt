@@ -22,6 +22,6 @@ class HelloControllerTest {
     fun getHello() {
         mvc!!.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk)
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.equalTo("Greetings from Spring Boot!")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.equalTo("Greetings from Spring Boot! To implement Azure next")))
     }
 }
